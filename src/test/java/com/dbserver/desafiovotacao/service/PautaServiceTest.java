@@ -1,9 +1,11 @@
 package com.dbserver.desafiovotacao.service;
 
+import com.dbserver.desafiovotacao.api.v1.model.ResultadoVotacao;
 import com.dbserver.desafiovotacao.domain.exceptions.PautaException;
 import com.dbserver.desafiovotacao.domain.exceptions.PautaNaoEncontradaException;
 import com.dbserver.desafiovotacao.domain.model.Pauta;
 import com.dbserver.desafiovotacao.domain.model.Situacao;
+import com.dbserver.desafiovotacao.domain.model.Voto;
 import com.dbserver.desafiovotacao.domain.repository.PautaRepository;
 import com.dbserver.desafiovotacao.domain.service.PautaService;
 import org.junit.jupiter.api.Test;
@@ -13,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,6 +32,8 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class PautaServiceTest {
 
+    public static final String VOTO_SIM = "Sim";
+    public static final String VOTO_NAO = "Não";
     @InjectMocks
     private PautaService pautaService;
     @Mock
@@ -141,5 +146,29 @@ public class PautaServiceTest {
         } catch (PautaNaoEncontradaException e) {
             assertEquals(format(NAO_FOI_POSSIVEL_LOCALIZAR_UMA_PAUTA_COM_ID, pautaId), e.getMessage());
         }
+    }
+
+    @Test
+    void deveRetornarOResultadoDaVotacao() throws PautaNaoEncontradaException {
+
+        Pauta pauta = new Pauta();
+        pauta.setId(1L);
+
+        Voto votoSim = new Voto();
+        votoSim.setVoto(VOTO_SIM);
+
+        Voto votoNao1 = new Voto();
+        votoNao1.setVoto(VOTO_NAO);
+
+        Voto votoNao2 = new Voto();
+        votoNao2.setVoto(VOTO_NAO);
+
+        pauta.setVotos(Arrays.asList(votoSim, votoNao1, votoNao2));
+
+        when(pautaRepository.findById(pauta.getId())).thenReturn(Optional.of(pauta));
+
+        ResultadoVotacao resultadoVotacao = pautaService.resultadoVotacao(pauta.getId());
+        assertEquals(1, resultadoVotacao.getQuantidadeVotosSim());
+        assertEquals(2, resultadoVotacao.getQuantidadeVotosNao());
     }
 }
