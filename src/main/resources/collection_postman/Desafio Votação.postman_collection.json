@@ -1,0 +1,361 @@
+{
+	"info": {
+		"_postman_id": "d6ae4ef1-dfb9-4406-acaa-7c0fe361f3ec",
+		"name": "Desafio Votação",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Pauta",
+			"item": [
+				{
+					"name": "GET",
+					"item": [
+						{
+							"name": "Listar pautas",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{local}}/v1/pautas",
+									"host": [
+										"{{local}}"
+									],
+									"path": [
+										"v1",
+										"pautas"
+									],
+									"query": [
+										{
+											"key": "situacao",
+											"value": "VOTACAO_FECHADA",
+											"description": "Required = false / Opções: VOTACAO_ABERTA / VOTACAO_FECHADA",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Buscar pauta pelo id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{local}}/v1/pautas/:pautaId",
+									"host": [
+										"{{local}}"
+									],
+									"path": [
+										"v1",
+										"pautas",
+										":pautaId"
+									],
+									"variable": [
+										{
+											"key": "pautaId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Resultado votação",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{local}}/v1/pautas/:pautaId/resultado-votacao",
+									"host": [
+										"{{local}}"
+									],
+									"path": [
+										"v1",
+										"pautas",
+										":pautaId",
+										"resultado-votacao"
+									],
+									"variable": [
+										{
+											"key": "pautaId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "POST",
+					"item": [
+						{
+							"name": "Criar pauta",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"descricao\": \"pauta 1\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{local}}/v1/pautas",
+									"host": [
+										"{{local}}"
+									],
+									"path": [
+										"v1",
+										"pautas"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "PUT",
+					"item": [
+						{
+							"name": "Abrir sessão",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{local}}/v1/pautas/:pautaId/abrir-sessao?dataHoraFim=2023-03-13T11:40",
+									"host": [
+										"{{local}}"
+									],
+									"path": [
+										"v1",
+										"pautas",
+										":pautaId",
+										"abrir-sessao"
+									],
+									"query": [
+										{
+											"key": "dataHoraFim",
+											"value": "2023-03-13T11:40",
+											"description": "Opcional (Default = 1 min) \n\nPassar dataHoraFim no formato yyyy-MM-ddTHH:mm\n\nExemplo: 2023-03-01T12:00"
+										}
+									],
+									"variable": [
+										{
+											"key": "pautaId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Voto",
+			"item": [
+				{
+					"name": "GET",
+					"item": [
+						{
+							"name": "Listar votos",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{local}}/v1/votos",
+									"host": [
+										"{{local}}"
+									],
+									"path": [
+										"v1",
+										"votos"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Buscar voto pelo id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{local}}/v1/votos/1",
+									"host": [
+										"{{local}}"
+									],
+									"path": [
+										"v1",
+										"votos",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "POST",
+					"item": [
+						{
+							"name": "Criar voto",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"associadoId\": \"1\",\r\n    \"voto\": \"Sim\",\r\n    \"pautaId\": \"1\" \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{local}}/v1/votos",
+									"host": [
+										"{{local}}"
+									],
+									"path": [
+										"v1",
+										"votos"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Associado",
+			"item": [
+				{
+					"name": "GET",
+					"item": [
+						{
+							"name": "Listar associados",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{local}}/v1/associados",
+									"host": [
+										"{{local}}"
+									],
+									"path": [
+										"v1",
+										"associados"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Buscar associado pelo id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{local}}/v1/associados/:associadoId",
+									"host": [
+										"{{local}}"
+									],
+									"path": [
+										"v1",
+										"associados",
+										":associadoId"
+									],
+									"variable": [
+										{
+											"key": "associadoId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "POST",
+					"item": [
+						{
+							"name": "Criar associado",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nome\": \"luanpaiva\",\r\n    \"cpf\": \"159.587.397-00\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{local}}/v1/associados",
+									"host": [
+										"{{local}}"
+									],
+									"path": [
+										"v1",
+										"associados"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Validar CPF",
+			"item": [
+				{
+					"name": "Validar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/v1/cpfs/validar?cpf=15958739700",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"v1",
+								"cpfs",
+								"validar"
+							],
+							"query": [
+								{
+									"key": "cpf",
+									"value": "15958739700",
+									"description": "Required"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
