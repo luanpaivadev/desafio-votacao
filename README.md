@@ -5,7 +5,10 @@
 3. Abrir o terminal na raiz do projeto e executar o comando: `docker-compose up -d`
 4. Utilizar de preferência o https://www.postman.com/ para testar as requisições. Deixei uma collection pronta na pasta `src/main/resources/collection_postman` para importar já com todos os endpoints criados.
 5. Também é possível consultar todos os endpoints criados acessando: http://localhost:8080/swagger-ui/index.html, quando a aplicação estiver em execução.
-6. Caso o projeto não consiga subir na porta 8080, por estar ocupada por alguma outra aplicação, poderá alterar essa configuração no arquivo `src/main/resources/application-dev.properties` na linha 1.
+6. Com o Java 17 instalado, abra o terminal do SO na raiz do projeto e execute o comando: `mvnw clean package` para o maven baixar todas as dependências necessárias e gerar o JAR do projeto.
+7. Uma pasta com nome `target` será criada com um arquivo chamado `desafio-votacao-0.0.1-SNAPSHOT.jar`.
+8. Para executar o projeto, abra o terminal do SO na pasta `target` e execute o comando: `java -jar desafio-votacao-0.0.1-SNAPSHOT.jar`.
+9. Caso o projeto não consiga subir na porta 8080, por estar ocupada por alguma outra aplicação, poderá alterar essa configuração no arquivo `src/main/resources/application-dev.properties` na linha 1, e execute novamente os passos **6, 7 e 8**.
 
 ---
 
