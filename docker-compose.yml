@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 0190747e-0f0f-41b9-ada0-d2632b474a1f
+      POSTGRES_DB: dbdesafiovotacao
+    ports:
+      - "5432:5432"
+
+  db2:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 0190747e-0f0f-41b9-ada0-d2632b474a1f
+      POSTGRES_DB: dbdesafiovotacao_test
+    ports:
+      - "5433:5432"
