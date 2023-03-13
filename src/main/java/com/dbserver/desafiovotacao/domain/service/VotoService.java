@@ -43,20 +43,11 @@ public class VotoService {
     public Voto salvarVoto(final VotoInput votoInput)
             throws AssociadoNaoEncontradoException, PautaNaoEncontradaException, PautaException {
 
-        Voto voto = new Voto();
         Pauta pauta = pautaService.buscarPautaPeloId(votoInput.getPautaId());
-
         validarSituacaoPauta(pauta);
-
         Associado associado = associadoService.buscarAssociadoPeloId(votoInput.getAssociadoId());
 
-        voto.setAssociado(associado);
-        voto.setPauta(pauta);
-        voto.setVoto(votoInput.getVoto());
-        voto = votoRepository.save(voto);
-        pauta.getVotos().add(voto);
-
-        return voto;
+        return votoRepository.save(new Voto(associado, votoInput.getVoto(), pauta));
     }
 
     private static void validarSituacaoPauta(Pauta pauta) throws PautaException {

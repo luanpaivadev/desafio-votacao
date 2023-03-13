@@ -1,9 +1,11 @@
 package com.dbserver.desafiovotacao.domain.service;
 
+import com.dbserver.desafiovotacao.api.v1.model.ResultadoVotacao;
 import com.dbserver.desafiovotacao.domain.exceptions.PautaException;
 import com.dbserver.desafiovotacao.domain.exceptions.PautaNaoEncontradaException;
 import com.dbserver.desafiovotacao.domain.model.Pauta;
 import com.dbserver.desafiovotacao.domain.model.Situacao;
+import com.dbserver.desafiovotacao.domain.model.Voto;
 import com.dbserver.desafiovotacao.domain.repository.PautaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -69,6 +71,14 @@ public class PautaService {
         pauta.setDataHoraFim(Objects.nonNull(dataHoraFim) ? dataHoraFim : pauta.getDataHoraInicio().plusMinutes(1));
 
         return save(pauta);
+    }
+
+    public ResultadoVotacao resultadoVotacao(final Long pautaId) throws PautaNaoEncontradaException {
+        Pauta pauta = buscarPautaPeloId(pautaId);
+        List<Voto> votos = pauta.getVotos();
+        long quantidadeVotosSim = votos.stream().filter(Voto::getVotoSim).count();
+        long quantidadeVotosNao = votos.stream().filter(Voto::getVotoNao).count();
+        return new ResultadoVotacao(quantidadeVotosSim, quantidadeVotosNao);
     }
 
     private void validarDataHoraFim(Long pautaId, LocalDateTime dataHoraFim, Pauta pauta) throws PautaException {

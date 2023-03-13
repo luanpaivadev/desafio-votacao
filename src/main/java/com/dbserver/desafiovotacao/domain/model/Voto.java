@@ -8,6 +8,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -15,6 +16,7 @@ import java.util.Objects;
 
 @Data
 @Entity
+@NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Voto {
 
@@ -29,6 +31,12 @@ public class Voto {
     private String voto;
     @ManyToOne
     private Pauta pauta;
+
+    public Voto(Associado associado, String voto, Pauta pauta) {
+        this.associado = associado;
+        this.voto = voto;
+        this.pauta = pauta;
+    }
 
     public boolean getVotoSim() {
         return Objects.equals(voto, "Sim");
